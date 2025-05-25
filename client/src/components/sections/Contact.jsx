@@ -171,7 +171,7 @@ const Contact = () => {
 
             <div
                 ref={socialRef}
-                className=" flex flex-col gap-3 items-center justify-center font-major -mt-15 lg:mt-0"
+                className=" flex flex-col gap-3 items-center justify-center font-major -mt-10 mb-10 lg:mt-0"
             >
                 <h1 id="social" className="text-2xl  lg:text-3xl">
                     SociALs
