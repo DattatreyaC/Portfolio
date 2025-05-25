@@ -1,0 +1,87 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Alumni+Sans+Pinstripe:ital@0;1&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Major+Mono+Display&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Nova+Square&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Sansation:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&display=swap");
+
+@import "tailwindcss";
+
+@theme {
+    --font-space-grotesk: "Space Grotesk", sans-seriff;
+    --font-alumni: "Alumni Sans Pinstripe", sans-seriff;
+    --font-major: "Major Mono Display", sans-seriff;
+    --font-nova: "Nova Square", sans-seriff;
+    --font-sensation: "Sansation", sans-seriff;
+    --color-main-accent: #4cbb17;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Space Grotesk", sans-serif;
+    color: #f3f4f6;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
+@layer utilities {
+    @keyframes loading {
+        0% {
+            transform: translateX(-100%);
+        }
+        100% {
+            transform: translateX(0%);
+        }
+    }
+
+    .animate-loading-bar {
+        animation: loading 1.5s cubic-bezier(0.565, 0.63, 0.64, -0.15) forwards;
+    }
+
+    @keyframes blink {
+        0%,
+        100% {
+            opacity: 1;
+        }
+        50% {
+            opacity: 0;
+        }
+    }
+
+    .animate-blink {
+        animation: blink 0.8s step-end infinite;
+    }
+
+    .arrow {
+        clip-path: polygon(51% 0%, 0% 100%, 51% 75%, 100% 100%);
+    }
+
+    .timeline-gradient {
+        background: linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.1),
+            white,
+            rgba(255, 255, 255, 0.1)
+        );
+        background-size: 200% 100%;
+        animation: moveBg 5s linear infinite;
+    }
+    @keyframes moveBg {
+        0% {
+            background-position: 200% 0%;
+        }
+        50% {
+            background-position: 0% 0%;
+        }
+        100% {
+            background-position: -200% 0%;
+        }
+    }
+}
+
+.hide-scrollbar {
+    ::-webkit-scrollbar-thumb {
+        display: none;
+    }
+}
