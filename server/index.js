@@ -8,7 +8,11 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 // Middleware
-app.use(cors());
+app.use(
+    cors({
+        origin: "https://portfolio-dattatreyac.vercel.app",
+    }),
+);
 app.use(json());
 
 // Create transporter using your .env credentials
