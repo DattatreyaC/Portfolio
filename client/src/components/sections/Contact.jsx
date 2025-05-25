@@ -4,6 +4,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import emailjs from "emailjs-com";
 import toast from "react-hot-toast";
+import axios from "axios";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -24,42 +25,35 @@ const Contact = () => {
         return true;
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+
         if (validateForm() === true) {
             setIsSending(true);
-            // Prepare the template parameters as per your EmailJS template variables
-            const templateParams = {
+
+            const payload = {
                 from_name: `${firstName} ${lastName}`,
                 from_email: email,
                 message: message,
             };
 
-            emailjs
-                .send(
-                    "service_2fgip2c", // replace with your Service ID
-                    "template_7y5mz44", // replace with your Template ID
-                    templateParams,
-                    import.meta.env.VITE_EMAILJS_PUBLIC_KEY, // replace with your Public Key
-                )
-                .then(
-                    (response) => {
-                        toast.success("Message sent successfully!");
-
-                        // Clear the form
-                        setFirstName("");
-                        setLastName("");
-                        setEmail("");
-                        setMessage("");
-                    },
-                    (error) => {
-                        console.log("FAILED...", error);
-                        toast.error(
-                            "Oops! Something went wrong, please try again.",
-                        );
-                    },
-                )
-                .finally(() => setIsSending(false));
+            try {
+                const response = await axios.post(
+                    "http://localhost:5000/send-email",
+                    payload,
+                );
+                toast.success("Message sent successfully!");
+                // Clear form fields
+                setFirstName("");
+                setLastName("");
+                setEmail("");
+                setMessage("");
+            } catch (error) {
+                console.error("Error sending email:", error);
+                toast.error("Oops! Something went wrong, please try again.");
+            } finally {
+                setIsSending(false);
+            }
         }
     };
 
