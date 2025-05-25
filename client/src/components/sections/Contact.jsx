@@ -171,7 +171,7 @@ const Contact = () => {
 
             <div
                 ref={socialRef}
-                className=" flex flex-col gap-3 items-center justify-center font-major -mt-40 lg:mt-0"
+                className=" flex flex-col gap-3 items-center justify-center font-major -mt-15 lg:mt-0"
             >
                 <h1 id="social" className="text-2xl  lg:text-3xl">
                     SociALs
@@ -184,7 +184,7 @@ const Contact = () => {
                         >
                             <img
                                 src="/icons8-linkedin-48.png"
-                                className="w-10 h-10"
+                                className="size-8 md:size-10"
                                 alt="linkedin logo"
                             />
                         </a>
@@ -193,7 +193,7 @@ const Contact = () => {
                     <div className="bg-white/60 lg:bg-white/40 lg:hover:bg-white transition-colors duration-300 rounded-full p-1 relative">
                         <a href="https://x.com/DattatreyaChak8" target="_blank">
                             <img
-                                className="w-10 h-10"
+                                className="size-8 md:size-10"
                                 src="/icons8-x-50.png"
                                 alt="X logo"
                             />
@@ -206,7 +206,7 @@ const Contact = () => {
                             target="_blank"
                         >
                             <img
-                                className="w-10 h-10"
+                                className="size-8 md:size-10"
                                 src="/icons8-instagram-48.png"
                                 alt="insta logo"
                             />
