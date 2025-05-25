@@ -39,7 +39,7 @@ const Contact = () => {
 
             try {
                 const response = await axios.post(
-                    "http://localhost:5000/send-email",
+                    "http://localhost:3000/send-email",
                     payload,
                 );
                 toast.success("Message sent successfully!");
