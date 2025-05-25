@@ -39,7 +39,7 @@ const Contact = () => {
 
             try {
                 const response = await axios.post(
-                    "http://localhost:3000/send-email",
+                    "https://portfolio-backend-one-beta.vercel.app/",
                     payload,
                 );
                 toast.success("Message sent successfully!");
