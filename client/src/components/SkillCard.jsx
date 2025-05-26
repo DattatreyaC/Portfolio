@@ -7,6 +7,7 @@ const SkillCard = ({ image, title }) => {
                 <img
                     src={image}
                     alt={title + " logo"}
+                    loading="lazy"
                     className="size-[2rem] sm:size-[2.3rem] xl:size-[2.3rem] lg:size-[2.3rem]"
                 />
             </div>

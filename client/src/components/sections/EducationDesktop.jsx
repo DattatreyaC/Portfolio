@@ -147,6 +147,7 @@ const EducationDesktop = () => {
                             <img
                                 src={e.image}
                                 alt={e.title}
+                                loading="lazy"
                                 ref={(el) => (imageRefs.current[i] = el)}
                                 className="w-full h-full rounded-full border-2 border-white bg-white shadow-md transition-shadow duration-300 group-hover:shadow-[0_0_50px_rgba(255,255,255,0.7)]"
                             />

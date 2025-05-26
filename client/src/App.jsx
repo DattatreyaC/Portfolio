@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import LoadingScreen from "./components/LoadingScreen";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
@@ -19,14 +19,15 @@ const App = () => {
 
     const [hovering, setHovering] = useState(false);
 
-    const followCursor = (e) => {
-        gsap.to("#cursor", {
-            x: e.clientX,
-            y: e.clientY,
-            duration: 0,
-            ease: "none",
-        });
-    };
+    const cursorRef = useRef(null);
+    // const followCursor = (e) => {
+    //     gsap.to("#cursor", {
+    //         x: e.clientX,
+    //         y: e.clientY,
+    //         duration: 0,
+    //         ease: "none",
+    //     });
+    // };
 
     const handleCursorClick = () => {
         const tl = gsap.timeline();
@@ -67,7 +68,7 @@ const App = () => {
     };
 
     useEffect(() => {
-        const cursor = document.getElementById("cursor");
+        const cursor = cursorRef.current;
 
         const enableCursor = () => cursor?.classList.remove("hidden");
         const disableCursor = () => cursor?.classList.add("hidden");
@@ -76,10 +77,25 @@ const App = () => {
         window.addEventListener("touchstart", disableCursor);
         window.addEventListener("keydown", disableCursor);
 
+        const quickX = gsap.quickTo(cursor, "x", {
+            duration: 0.1,
+            ease: "none",
+        });
+        const quickY = gsap.quickTo(cursor, "y", {
+            duration: 0.1,
+            ease: "none",
+        });
+        const moveCursor = (e) => {
+            quickX(e.clientX);
+            quickY(e.clientY);
+        };
+        window.addEventListener("mousemove", moveCursor);
+
         return () => {
             window.removeEventListener("mousemove", enableCursor);
             window.removeEventListener("touchstart", disableCursor);
             window.removeEventListener("keydown", disableCursor);
+            window.removeEventListener("mousemove", moveCursor);
         };
     }, []);
 
@@ -88,7 +104,6 @@ const App = () => {
             <main
                 className="min-h-screen w-full relative select-none overflow-y-hidden overflow-x-hidden"
                 onContextMenu={(e) => disableContextMenu(e)}
-                onMouseMove={(e) => followCursor(e)}
                 onClick={handleCursorClick}
             >
                 {window.innerWidth >= 768 && <BackgroundGlow />}
@@ -135,6 +150,7 @@ const App = () => {
                 ></div> */}
 
                 <div
+                    ref={cursorRef}
                     id="cursor"
                     className="fixed top-0 left-[-5px] z-50 h-6 w-6  bg-transparent pointer-events-none hidden overflow-hidden"
                 >

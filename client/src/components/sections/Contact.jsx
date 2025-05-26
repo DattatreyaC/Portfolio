@@ -2,7 +2,6 @@ import React, { useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import emailjs from "emailjs-com";
 import toast from "react-hot-toast";
 import axios from "axios";
 
@@ -105,7 +104,7 @@ const Contact = ({ handleMouseHover, revertHover }) => {
             className="min-h-screen relative w-full flex flex-col items-center justify-around gap-5 py-10 lg:flex-row lg:justify-center lg:gap-20"
         >
             <div className=" w-full px-5 sm:px-15 md:w-[90%] md:px-25 lg:px-15 lg:w-1/2 xl:w-[40rem] xl:px-10 ">
-                <h1 className="text-3xl font-major mt-5 pb-10 text-center lg:font-medium lg:text-4xl lg:text-left">
+                <h1 className="text-3xl font-major mt-5 pb-10 text-center lg:font-medium lg:text-4xl lg:text-left ">
                     ContAct Me
                 </h1>
 
@@ -134,7 +133,7 @@ const Contact = ({ handleMouseHover, revertHover }) => {
                         onChange={(e) => setLastName(e.target.value)}
                     />
                     <input
-                        type="text"
+                        type="email"
                         id="email"
                         name="email"
                         autoComplete="off"
@@ -149,7 +148,7 @@ const Contact = ({ handleMouseHover, revertHover }) => {
                         name="message"
                         value={message}
                         placeholder="Write your message here..."
-                        className="border-1 border-white/50 resize-none h-25 lg:h-50 p-3 text-white bg-transparent focus:outline-none focus:border-main-accent"
+                        className="border-1 border-white/50 resize-none h-25 lg:h-35 xl:h-50 p-3 text-white bg-transparent focus:outline-none focus:border-main-accent"
                         onChange={(e) => setMessage(e.target.value)}
                     />
 
@@ -164,9 +163,20 @@ const Contact = ({ handleMouseHover, revertHover }) => {
                     >
                         <div className="absolute top-0 left-[-100%] h-full w-[200%] bg-gradient-to-r  from-main-accent/80 via-emerald-400 to-main-accent/80 transition-all duration-300 group-hover:left-0 z-0"></div>
 
-                        <p className="text-white relative z-10 [text-shadow:1px_1px_3px_black]">
-                            {isSending ? "Sending..." : "Send Message"}
-                        </p>
+                        {isSending ? (
+                            <div className="flex justify-center text-md [text-shadow:1px_1px_10px_black]">
+                                <p className="text-white relative text-md z-10 [text-shadow:1px_1px_3px_black]">
+                                    Sending
+                                </p>
+                                <div className="animate-spin">
+                                    <i class="ri-loader-line"></i>
+                                </div>
+                            </div>
+                        ) : (
+                            <p className="text-white relative text-md z-10 [text-shadow:1px_1px_3px_black]">
+                                Send Message
+                            </p>
+                        )}
                     </button>
                 </form>
             </div>
@@ -178,8 +188,12 @@ const Contact = ({ handleMouseHover, revertHover }) => {
                 <h1 id="social" className="text-2xl  lg:text-3xl">
                     SociALs
                 </h1>
-                <div ref={linksRef} id="links" className="flex gap-10">
-                    <div className="bg-white/60 lg:bg-white/40 lg:hover:bg-white transition-colors duration-300 rounded-full p-1 relative">
+                <div
+                    ref={linksRef}
+                    id="links"
+                    className="flex gap-10 lg:p-10 lg:rounded-md lg:transition-colors lg:duration-300 lg:border lg:border-transparent lg:hover:border-white/30 lg:hover:bg-white/10 "
+                >
+                    <div className="bg-white/60 lg:bg-white/40 lg:hover:bg-white transition-colors duration-300 rounded-full lg:rounded-md p-1 relative">
                         <a
                             target="_blank"
                             href="https://www.linkedin.com/in/dattatreya-chakraborty/"
@@ -194,7 +208,7 @@ const Contact = ({ handleMouseHover, revertHover }) => {
                         </a>
                     </div>
 
-                    <div className="bg-white/60 lg:bg-white/40 lg:hover:bg-white transition-colors duration-300 rounded-full p-1 relative">
+                    <div className="bg-white/60 lg:bg-white/40 lg:hover:bg-white transition-colors duration-300 rounded-full lg:rounded-md p-1 relative">
                         <a
                             href="https://x.com/DattatreyaChak8"
                             target="_blank"
@@ -209,7 +223,7 @@ const Contact = ({ handleMouseHover, revertHover }) => {
                         </a>
                     </div>
 
-                    <div className="bg-white/60 lg:bg-white/40 lg:hover:bg-white transition-colors duration-300 rounded-full p-1 relative">
+                    <div className="bg-white/60 lg:bg-white/40 lg:hover:bg-white transition-colors duration-300 rounded-full lg:rounded-md p-1 relative">
                         <a
                             href="https://www.instagram.com/dattatreyac__/"
                             target="_blank"

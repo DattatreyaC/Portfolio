@@ -24,6 +24,7 @@ const About = ({ handleMouseHover, revertHover }) => {
             className="min-h-screen w-full flex flex-col 2xl:flex-row items-center justify-center py-21 bg-transparent px-5 relative "
         >
             {width <= 1024 ? <Education /> : <EducationDesktop />}
+
             <Skills />
             {/* <div className="w-full min-h-screen absolute top-0 left-0 bg-[#161616] -z-10 "></div> */}
         </section>

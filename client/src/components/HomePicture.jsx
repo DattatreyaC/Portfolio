@@ -67,6 +67,7 @@ const HomePicture = ({ isLoaded }) => {
                     ref={spinref}
                     src="icons8-react-js-48.png"
                     alt="react"
+                    loading="lazy"
                     className="absolute bg-slate-900 size-15 lg:size-20 rounded-full p-3 bottom-0 left-2 shadow-2xl border border-sky-300 lg:bottom-5 lg:left-3 xl:left-10"
                 />
                 {/* Node Icon */}
@@ -74,12 +75,14 @@ const HomePicture = ({ isLoaded }) => {
                     ref={nodeRef}
                     src="icons8-node-js-48.png"
                     alt="node"
+                    loading="lazy"
                     className="absolute bg-slate-900 size-10 lg:size-13 rounded-full p-1.5 bottom-2 right-3 lg:bottom-10 lg:right-5 xl:bottom-13 xl:right-9 shadow-2xl border-2 border-emerald-500"
                 />
                 {/* JS Icon */}
                 <img
                     src="icons8-javascript-48.png"
                     alt="js"
+                    loading="lazy"
                     className="absolute bg-slate-900 size-10 lg:size-12 rounded-full p-1.5 top-1 left-3 lg:top-10 lg:left-7 xl:top-15 xl:left-10 shadow-2xl border border-yellow-500"
                 />
                 {/* Accent Dots */}

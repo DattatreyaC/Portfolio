@@ -1,26 +1,28 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 
 const BackgroundGlow = () => {
     const glowRef = useRef(null);
 
     useGSAP(() => {
+        let quickX = gsap.quickTo(glowRef.current, "x", {
+            duration: 0.4,
+            ease: "power2.out",
+        });
+
+        let quickY = gsap.quickTo(glowRef.current, "y", {
+            duration: 0.4,
+            ease: "power2.out",
+        });
+
         const followCursor = (e) => {
-            gsap.to(glowRef.current, {
-                x: e.pageX,
-                y: e.pageY,
-                duration: 1, // Keep duration the same for smooth follow
-                ease: "power1.out",
-                overwrite: "auto",
-            });
+            quickX(e.pageX);
+            quickY(e.pageY);
         };
 
         window.addEventListener("mousemove", followCursor);
-
-        return () => {
-            window.removeEventListener("mousemove", followCursor);
-        };
+        return () => window.removeEventListener("mousemove", followCursor);
     }, []);
 
     return (
@@ -31,8 +33,8 @@ const BackgroundGlow = () => {
                 width: "300px",
                 height: "300px",
                 background:
-                    "radial-gradient(circle at center, rgba(0, 255, 0, 0.4) 0%, rgba(0, 255, 0, 0.1) 60%, transparent 80%)",
-                filter: "blur(80px)",
+                    "radial-gradient(circle at center, rgba(0, 255, 0, 0.25) 0%, rgba(0, 255, 0, 0.05) 60%, transparent 80%)",
+                filter: "blur(30px)",
                 transform: "translate(-50%, -50%)",
             }}
         />

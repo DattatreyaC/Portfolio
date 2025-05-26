@@ -4,9 +4,9 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SkillCard from "../SkillCard";
 
-const Skills = () => {
-    gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger);
 
+const Skills = () => {
     const skillsRef = useRef(null);
 
     // This will refresh ScrollTrigger when the component is mounted or updated
