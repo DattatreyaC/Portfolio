@@ -13,6 +13,7 @@
     --font-nova: "Nova Square", sans-seriff;
     --font-sensation: "Sansation", sans-seriff;
     --color-main-accent: #4cbb17;
+    --color-cursor: #a9fc01;
 }
 
 html,
@@ -23,6 +24,35 @@ body {
     color: #f3f4f6;
     scroll-behavior: smooth;
     overflow-x: hidden;
+}
+main {
+    cursor: none;
+}
+a {
+    cursor: none;
+}
+button {
+    cursor: none;
+}
+input {
+    cursor: none;
+}
+textarea {
+    cursor: none;
+}
+
+::-webkit-scrollbar {
+    cursor: default;
+    width: 12px;
+    z-index: -1;
+}
+::-webkit-scrollbar-track {
+    background-color: black;
+}
+::-webkit-scrollbar-thumb {
+    background-color: var(--color-main-accent);
+    border-radius: 5rem;
+    border: 3px solid black;
 }
 
 @layer utilities {
@@ -77,11 +107,5 @@ body {
         100% {
             background-position: -200% 0%;
         }
-    }
-}
-
-.hide-scrollbar {
-    ::-webkit-scrollbar-thumb {
-        display: none;
     }
 }

@@ -16,6 +16,7 @@ const educationData = [
         description: "MCA",
         image: juLogo,
         color: "red",
+        score: "",
     },
     {
         title: "Institute of Engineering & Management",
@@ -23,6 +24,7 @@ const educationData = [
         description: "BCA",
         image: iemLogo,
         color: "blue",
+        score: "9.53",
     },
     {
         title: "Aditya Academy Senior Secondary",
@@ -30,6 +32,7 @@ const educationData = [
         description: "12th",
         image: aassLogo,
         color: "gray",
+        score: "91%",
     },
     {
         title: "The Calcutta Boys' School",
@@ -37,6 +40,7 @@ const educationData = [
         description: "10th",
         image: cbsLogo,
         color: "black",
+        score: "89.6%",
     },
 ];
 
@@ -119,6 +123,10 @@ export default function Education() {
 
                                 <p className="text-gray-300 text-sm md:group-hover:text-white">
                                     {edu.description}
+                                    {edu.description === "BCA" ||
+                                    edu.description === "MCA"
+                                        ? edu.score && ` , DGPA - ${edu.score}`
+                                        : ` , Grade - ${edu.score}`}
                                 </p>
                             </div>
                         </div>

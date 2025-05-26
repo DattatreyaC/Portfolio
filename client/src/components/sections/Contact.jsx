@@ -8,7 +8,7 @@ import axios from "axios";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const Contact = () => {
+const Contact = ({ handleMouseHover, revertHover }) => {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
@@ -159,6 +159,8 @@ const Contact = () => {
                         className={`group relative bg-transparent cursor-pointer  lg:mt-5 p-3 text-md font-semibold [letter-spacing:1px] rounded overflow-hidden ${
                             isSending && " cursor-not-allowed"
                         }`}
+                        onMouseOver={handleMouseHover}
+                        onMouseLeave={revertHover}
                     >
                         <div className="absolute top-0 left-[-100%] h-full w-[200%] bg-gradient-to-r  from-main-accent/80 via-emerald-400 to-main-accent/80 transition-all duration-300 group-hover:left-0 z-0"></div>
 
@@ -181,6 +183,8 @@ const Contact = () => {
                         <a
                             target="_blank"
                             href="https://www.linkedin.com/in/dattatreya-chakraborty/"
+                            onMouseOver={handleMouseHover}
+                            onMouseLeave={revertHover}
                         >
                             <img
                                 src="/icons8-linkedin-48.png"
@@ -191,7 +195,12 @@ const Contact = () => {
                     </div>
 
                     <div className="bg-white/60 lg:bg-white/40 lg:hover:bg-white transition-colors duration-300 rounded-full p-1 relative">
-                        <a href="https://x.com/DattatreyaChak8" target="_blank">
+                        <a
+                            href="https://x.com/DattatreyaChak8"
+                            target="_blank"
+                            onMouseOver={handleMouseHover}
+                            onMouseLeave={revertHover}
+                        >
                             <img
                                 className="size-8 md:size-10"
                                 src="/icons8-x-50.png"
@@ -204,6 +213,8 @@ const Contact = () => {
                         <a
                             href="https://www.instagram.com/dattatreyac__/"
                             target="_blank"
+                            onMouseOver={handleMouseHover}
+                            onMouseLeave={revertHover}
                         >
                             <img
                                 className="size-8 md:size-10"

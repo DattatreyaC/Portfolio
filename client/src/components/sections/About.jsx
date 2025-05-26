@@ -16,7 +16,7 @@ function useWindowWidth() {
     return width;
 }
 
-const About = () => {
+const About = ({ handleMouseHover, revertHover }) => {
     const width = useWindowWidth();
     return (
         <section

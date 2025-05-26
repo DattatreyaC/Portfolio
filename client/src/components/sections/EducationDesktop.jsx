@@ -21,6 +21,7 @@ const EducationDesktop = () => {
             description: "10th",
             image: cbsLogo,
             color: "black",
+            score: "89.6%",
         },
         {
             title: "Aditya Academy Senior Secondary",
@@ -28,6 +29,7 @@ const EducationDesktop = () => {
             description: "12th",
             image: aassLogo,
             color: "gray",
+            score: "91%",
         },
         {
             title: "Institute of Engineering & Management",
@@ -35,6 +37,7 @@ const EducationDesktop = () => {
             description: "BCA",
             image: iemLogo,
             color: "blue",
+            score: "9.53",
         },
         {
             title: "Jadavpur University",
@@ -42,6 +45,7 @@ const EducationDesktop = () => {
             description: "MCA",
             image: juLogo,
             color: "red",
+            score: "",
         },
     ];
 
@@ -170,6 +174,10 @@ const EducationDesktop = () => {
                                 </p>
                                 <p className="text-md text-white/30 group-hover:text-white transition-colors duration-300">
                                     {e.description}
+                                    {e.description === "BCA" ||
+                                    e.description === "MCA"
+                                        ? e.score && ` , DGPA - ${e.score}`
+                                        : ` , Grade - ${e.score}`}
                                 </p>
                             </div>
                         </div>

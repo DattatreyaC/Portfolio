@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import LoadingScreen from "./components/LoadingScreen";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
@@ -17,11 +17,14 @@ const App = () => {
     const [isLoaded, setIsLoaded] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
 
+    const [hovering, setHovering] = useState(false);
+
     const followCursor = (e) => {
         gsap.to("#cursor", {
             x: e.clientX,
             y: e.clientY,
-            duration: 0.1,
+            duration: 0,
+            ease: "none",
         });
     };
 
@@ -35,25 +38,27 @@ const App = () => {
             scale: 1,
             duration: 0.1,
         });
-        tl.to("#cursor", {
-            ease: "elastic.out",
-            duration: 2,
-        });
+        // tl.to("#cursor", {
+        //     ease: "elastic.out",
+        //     duration: 2,
+        // });
     };
 
     const handleMouseHover = () => {
+        setHovering(true);
         gsap.to("#cursor", {
-            scale: 2.5,
-            opacity: 0.5,
-            duration: 0.2,
+            scale: 1.3,
+            rotate: 29,
+            duration: 0.3,
         });
     };
 
     const revertHover = () => {
+        setHovering(false);
         gsap.to("#cursor", {
             scale: 1,
-            opacity: 1,
-            duration: 0.2,
+            rotate: 0,
+            duration: 0.3,
         });
     };
 
@@ -61,12 +66,29 @@ const App = () => {
         e.preventDefault();
     };
 
+    useEffect(() => {
+        const cursor = document.getElementById("cursor");
+
+        const enableCursor = () => cursor?.classList.remove("hidden");
+        const disableCursor = () => cursor?.classList.add("hidden");
+
+        window.addEventListener("mousemove", enableCursor);
+        window.addEventListener("touchstart", disableCursor);
+        window.addEventListener("keydown", disableCursor);
+
+        return () => {
+            window.removeEventListener("mousemove", enableCursor);
+            window.removeEventListener("touchstart", disableCursor);
+            window.removeEventListener("keydown", disableCursor);
+        };
+    }, []);
+
     return (
         <>
             <main
                 className="min-h-screen w-full relative select-none overflow-y-hidden overflow-x-hidden"
+                onContextMenu={(e) => disableContextMenu(e)}
                 onMouseMove={(e) => followCursor(e)}
-                // onContextMenu={(e) => disableContextMenu(e)}
                 onClick={handleCursorClick}
             >
                 {window.innerWidth >= 768 && <BackgroundGlow />}
@@ -78,16 +100,29 @@ const App = () => {
                             menuOpen={menuOpen}
                             setMenuOpen={setMenuOpen}
                             isLoaded={isLoaded}
+                            handleMouseHover={handleMouseHover}
+                            revertHover={revertHover}
                         />
                         <MobileMenu
                             menuOpen={menuOpen}
                             setMenuOpen={setMenuOpen}
                         />
-                        <Home isLoaded={isLoaded} />
+                        <Home
+                            isLoaded={isLoaded}
+                            handleMouseHover={handleMouseHover}
+                            revertHover={revertHover}
+                        />
                         <About />
                         <Projects />
-                        <Contact />
-                        <Footer />
+                        <Contact
+                            handleMouseHover={handleMouseHover}
+                            revertHover={revertHover}
+                        />
+                        <Footer
+                            handleMouseHover={handleMouseHover}
+                            revertHover={revertHover}
+                        />
+                        <Firefly count={6} />
                     </>
                 ) : (
                     <LoadingScreen onComplete={() => setIsLoaded(true)} />
@@ -99,13 +134,15 @@ const App = () => {
                     } text-gray-100 flex items-center justify-center flex-col z-[1] bg-transparent`}
                 ></div> */}
 
-                {/* <div
+                <div
                     id="cursor"
-                    className="fixed top-0 left-[-5px] z-50 h-6 w-6 shadow-[0_0_15px_main-accent] bg-transparent pointer-events-none overflow-hidden"
+                    className="fixed top-0 left-[-5px] z-50 h-6 w-6  bg-transparent pointer-events-none hidden overflow-hidden"
                 >
-                    <div className="w-full h-full bg-main-accent arrow rotate-330"></div>
-                </div> */}
-                {isLoaded && <Firefly count={6} />}
+                    <div
+                        className={`w-full h-full arrow bg-cursor rotate-330`}
+                    ></div>
+                </div>
+
                 <Toaster position="bottom-center" reverseOrder={false} />
             </main>
         </>

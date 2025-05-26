@@ -3,7 +3,7 @@ import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import HomePicture from "../HomePicture";
 
-const Home = ({ isLoaded }) => {
+const Home = ({ isLoaded, handleMouseHover, revertHover }) => {
     const projectRef = useRef(null);
     const contactRef = useRef(null);
     const paraRef = useRef(null);
@@ -72,21 +72,25 @@ const Home = ({ isLoaded }) => {
                             ref={projectRef}
                             id="project-btn"
                             href="#projects"
-                            className="px-5 py-1 rounded relative overflow-hidden"
+                            className="px-5 py-1 rounded-sm relative overflow-hidden"
                             onMouseEnter={() => {
+                                handleMouseHover();
                                 gsap.to(projectRef.current, {
                                     y: -5,
                                     duration: 0.3,
                                 });
                             }}
                             onMouseLeave={() => {
+                                revertHover();
                                 gsap.to(projectRef.current, {
                                     y: 0,
                                     duration: 0.3,
                                 });
                             }}
                         >
-                            <p className="z-10 text-black">View Projects</p>
+                            <p className="z-10 font-major text-black font-semibold text-[0.9rem] md:text-[1rem]">
+                                VieW pRojects
+                            </p>
                             <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-green-600 via-green-400 to-green-800 -z-10"></div>
                         </a>
                         <a
@@ -94,6 +98,8 @@ const Home = ({ isLoaded }) => {
                             id="contact-btn"
                             href="#contact"
                             className="text-green-400 border-b font-semibold lg:text-lg"
+                            onMouseOver={handleMouseHover}
+                            onMouseLeave={revertHover}
                         >
                             LET'S CONNECT!
                         </a>

@@ -2,7 +2,13 @@ import { useGSAP } from "@gsap/react";
 import React, { useEffect } from "react";
 import gsap from "gsap";
 
-const Navbar = ({ menuOpen, setMenuOpen, isLoaded, handleMouseHover }) => {
+const Navbar = ({
+    menuOpen,
+    setMenuOpen,
+    isLoaded,
+    handleMouseHover,
+    revertHover,
+}) => {
     useEffect(() => {
         document.body.style.overflow = menuOpen ? "hidden" : "";
     }, [menuOpen]);
@@ -35,7 +41,8 @@ const Navbar = ({ menuOpen, setMenuOpen, isLoaded, handleMouseHover }) => {
                     id="logo"
                     href="#home"
                     className="font-major text-3xl sm:text-4xl flex items-center gap-1 "
-                    // onMouseOver={handleMouseHover}
+                    onMouseOver={handleMouseHover}
+                    onMouseLeave={revertHover}
                 >
                     <div className="bg-white flex items-center justify-center text-black font-bold p-0.5">
                         <span className="text-main-accent">D</span>C
@@ -60,28 +67,36 @@ const Navbar = ({ menuOpen, setMenuOpen, isLoaded, handleMouseHover }) => {
                 <div id="links" className="hidden md:flex items-center gap-8 ">
                     <a
                         href="#home"
-                        className="text-gray-300 hover:text-[#70ff70] px-1 transition-colors ease-in-out "
+                        className="text-gray-300 hover:text-[#70ff70] px-1 transition-colors ease-in-out py-2 px-2"
+                        onMouseOver={handleMouseHover}
+                        onMouseLeave={revertHover}
                     >
                         Home
                     </a>
 
                     <a
                         href="#about"
-                        className="text-gray-300 hover:text-[#70ff70] px-1 transition-colors ease-in-out "
+                        className="text-gray-300 hover:text-[#70ff70] px-1 transition-colors ease-in-out py-2 px-2"
+                        onMouseOver={handleMouseHover}
+                        onMouseLeave={revertHover}
                     >
                         About
                     </a>
 
                     <a
                         href="#projects"
-                        className="text-gray-300 hover:text-[#70ff70] px-1 transition-colors ease-in-out "
+                        className="text-gray-300 hover:text-[#70ff70] px-1 transition-colors ease-in-out py-2 px-2"
+                        onMouseOver={handleMouseHover}
+                        onMouseLeave={revertHover}
                     >
                         Projects
                     </a>
 
                     <a
                         href="#contact"
-                        className="text-gray-300 hover:text-[#70ff70] px-1 transition-colors ease-in-out "
+                        className="text-gray-300 hover:text-[#70ff70] px-1 transition-colors ease-in-out py-2 px-2"
+                        onMouseOver={handleMouseHover}
+                        onMouseLeave={revertHover}
                     >
                         Contact
                     </a>
