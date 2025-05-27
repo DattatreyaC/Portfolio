@@ -94,7 +94,7 @@ export default function Education() {
                                 x: 0,
                             });
                         }}
-                        className={`education-item rounded-md  border p-2 border-white/60 transition-colors duration-275 bg-gray-400/40 md:bg-transparent ${
+                        className={`education-item rounded-md  border p-2 border-white/60 transition-colors duration-275 bg-gray-400/30 md:bg-transparent ${
                             edu.color === "red" && "md:hover:bg-red-400/50"
                         } ${edu.color === "blue" && "md:hover:bg-sky-300/50"} ${
                             edu.color === "gray" && "md:hover:bg-gray-500/50"
