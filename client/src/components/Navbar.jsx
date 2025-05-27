@@ -1,5 +1,5 @@
 import { useGSAP } from "@gsap/react";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
 
 const Navbar = ({
@@ -9,6 +9,8 @@ const Navbar = ({
     handleMouseHover,
     revertHover,
 }) => {
+    const linksRef = useRef(null);
+
     useEffect(() => {
         document.body.style.overflow = menuOpen ? "hidden" : "";
     }, [menuOpen]);
@@ -16,6 +18,12 @@ const Navbar = ({
     useGSAP(() => {
         const navTimeline = gsap.timeline();
 
+        gsap.from(linksRef.current, {
+            opacity: 0,
+            duration: 2,
+            x: -50,
+            ease: "elastic.out",
+        });
         navTimeline.from("#logo", {
             opacity: 0,
             y: -20,
@@ -65,10 +73,14 @@ const Navbar = ({
                 </button>
 
                 {/* desktop menu */}
-                <div id="links" className="hidden md:flex items-center gap-8 ">
+                <div
+                    ref={linksRef}
+                    id="links"
+                    className="hidden md:flex items-center gap-8 border border-white/30 p-3 rounded-xl bg-white/10 hover:bg-white/20 duration-300 transition-colors"
+                >
                     <a
                         href="#home"
-                        className="text-gray-300 hover:text-[#70ff70]  transition-colors ease-in-out py-2 px-2"
+                        className="text-gray-200 hover:text-[#70ff70]  transition-colors ease-in-out py-2 px-2"
                         onMouseOver={handleMouseHover}
                         onMouseLeave={revertHover}
                     >
@@ -77,7 +89,7 @@ const Navbar = ({
 
                     <a
                         href="#about"
-                        className="text-gray-300 hover:text-[#70ff70]  transition-colors ease-in-out py-2 px-2"
+                        className="text-gray-200 hover:text-[#70ff70]  transition-colors ease-in-out py-2 px-2"
                         onMouseOver={handleMouseHover}
                         onMouseLeave={revertHover}
                     >
@@ -86,7 +98,7 @@ const Navbar = ({
 
                     <a
                         href="#projects"
-                        className="text-gray-300 hover:text-[#70ff70]  transition-colors ease-in-out py-2 px-2"
+                        className="text-gray-200 hover:text-[#70ff70]  transition-colors ease-in-out py-2 px-2"
                         onMouseOver={handleMouseHover}
                         onMouseLeave={revertHover}
                     >
@@ -95,7 +107,7 @@ const Navbar = ({
 
                     <a
                         href="#contact"
-                        className="text-gray-300 hover:text-[#70ff70]  transition-colors ease-in-out py-2 px-2"
+                        className="text-gray-200 hover:text-[#70ff70]  transition-colors ease-in-out py-2 px-2"
                         onMouseOver={handleMouseHover}
                         onMouseLeave={revertHover}
                     >

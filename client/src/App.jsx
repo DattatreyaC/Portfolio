@@ -144,7 +144,7 @@ const App = () => {
                             handleMouseHover={handleMouseHover}
                             revertHover={revertHover}
                         />
-                        <Firefly count={6} />
+                        <Firefly count={3} />
                     </>
                 ) : (
                     <LoadingScreen onComplete={() => setIsLoaded(true)} />
