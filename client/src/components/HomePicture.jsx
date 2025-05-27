@@ -1,7 +1,7 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import React, { useRef } from "react";
-import profilePicture from "../assets/images/profilePicture.png";
+import profilePicture from "../assets/images/profilePicture.webp";
 
 const HomePicture = ({ isLoaded }) => {
     const ref = useRef(null);

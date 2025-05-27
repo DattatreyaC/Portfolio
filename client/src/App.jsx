@@ -14,6 +14,7 @@ import BackgroundGlow from "./components/BackgroundGlow";
 import { Toaster } from "react-hot-toast";
 
 const App = () => {
+    const [hasMouse, setHasMouse] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
     const [menuOpen, setMenuOpen] = useState(false);
 
@@ -68,6 +69,12 @@ const App = () => {
     };
 
     useEffect(() => {
+        const isMouse = window.matchMedia("(pointer:fine)").matches;
+        setHasMouse(isMouse);
+
+        if (!hasMouse) {
+            return;
+        }
         const cursor = cursorRef.current;
 
         const enableCursor = () => cursor?.classList.remove("hidden");
@@ -97,7 +104,7 @@ const App = () => {
             window.removeEventListener("keydown", disableCursor);
             window.removeEventListener("mousemove", moveCursor);
         };
-    }, []);
+    }, [hasMouse]);
 
     return (
         <>
@@ -149,15 +156,17 @@ const App = () => {
                     } text-gray-100 flex items-center justify-center flex-col z-[1] bg-transparent`}
                 ></div> */}
 
-                <div
-                    ref={cursorRef}
-                    id="cursor"
-                    className="fixed top-0 left-[-5px] z-50 h-6 w-6  bg-transparent pointer-events-none hidden overflow-hidden"
-                >
+                {hasMouse && (
                     <div
-                        className={`w-full h-full arrow bg-cursor rotate-330`}
-                    ></div>
-                </div>
+                        ref={cursorRef}
+                        id="cursor"
+                        className="fixed top-0 left-[-5px] z-50 h-6 w-6  bg-transparent pointer-events-none hidden overflow-hidden"
+                    >
+                        <div
+                            className={`w-full h-full arrow bg-cursor rotate-330`}
+                        ></div>
+                    </div>
+                )}
 
                 <Toaster position="bottom-center" reverseOrder={false} />
             </main>
