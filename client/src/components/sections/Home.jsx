@@ -88,8 +88,10 @@ const Home = ({ isLoaded, handleMouseHover, revertHover }) => {
                                 });
                             }}
                         >
-                            <p className="z-10 font-major text-black font-semibold text-[0.9rem] md:text-[1rem]">
-                                VieW pRojects
+                            <p className=" font-major text-black font-semibold text-[0.8rem] sm:text-[0.85rem] xl:text-[1rem] ">
+                                {window.innerWidth >= 640
+                                    ? "VieW Ppojects"
+                                    : "PRojects"}
                             </p>
                             <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-green-600 via-green-400 to-green-800 -z-10"></div>
                         </a>
@@ -97,7 +99,7 @@ const Home = ({ isLoaded, handleMouseHover, revertHover }) => {
                             ref={contactRef}
                             id="contact-btn"
                             href="#contact"
-                            className="text-green-400 border-b font-semibold lg:text-lg"
+                            className="text-green-400 font-semibold border-b text-[0.85rem] sm:text-[0.9rem] md:text-[1rem] lg:text-[1.05rem]"
                             onMouseOver={handleMouseHover}
                             onMouseLeave={revertHover}
                         >
