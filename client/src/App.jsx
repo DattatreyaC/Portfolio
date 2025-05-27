@@ -156,7 +156,7 @@ const App = () => {
                     } text-gray-100 flex items-center justify-center flex-col z-[1] bg-transparent`}
                 ></div> */}
 
-                {/* {hasMouse && (
+                {hasMouse && (
                     <div
                         ref={cursorRef}
                         id="cursor"
@@ -166,7 +166,7 @@ const App = () => {
                             className={`w-full h-full arrow bg-cursor rotate-330`}
                         ></div>
                     </div>
-                )} */}
+                )}
 
                 <Toaster position="bottom-center" reverseOrder={false} />
             </main>
