@@ -99,7 +99,7 @@ const Home = ({ isLoaded, handleMouseHover, revertHover }) => {
                             ref={contactRef}
                             id="contact-btn"
                             href="#contact"
-                            className="text-green-400 font-semibold border-b text-[0.85rem] sm:text-[0.9rem] md:text-[1rem] lg:text-[1.05rem]"
+                            className="text-green-400 font-semibold border-b text-[0.9rem] sm:text-[0.9rem] md:text-[1rem] lg:text-[1.05rem]"
                             onMouseOver={handleMouseHover}
                             onMouseLeave={revertHover}
                         >
