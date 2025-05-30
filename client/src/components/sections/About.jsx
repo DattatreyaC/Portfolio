@@ -1,29 +1,32 @@
 import Skills from "./Skills";
-import Education from "./Education";
 import { useEffect, useState } from "react";
 import EducationDesktop from "./EducationDesktop";
+import EducationMobile from "./EducationMobile";
 
-function useWindowWidth() {
-    const [width, setWidth] = useState(window.innerWidth);
+function useMediaQuery(query) {
+    const [matches, setMatches] = useState(false);
 
     useEffect(() => {
-        const handleResize = () => setWidth(window.innerWidth);
+        const media = window.matchMedia(query);
+        setMatches(media.matches);
 
-        window.addEventListener("resize", handleResize);
-        return () => window.removeEventListener("resize", handleResize);
-    }, []);
+        const listener = () => setMatches(media.matches);
+        media.addEventListener("change", listener);
 
-    return width;
+        return () => media.removeEventListener("change", listener);
+    }, [query]);
+
+    return matches;
 }
 
 const About = ({ handleMouseHover, revertHover }) => {
-    const width = useWindowWidth();
+    const isMobile = useMediaQuery("(max-width: 1024px)");
     return (
         <section
             id="about"
-            className="min-h-screen w-full flex flex-col 2xl:flex-row items-center justify-center py-21 bg-transparent px-5 relative "
+            className="min-h-screen w-full flex flex-col xl:flex-row items-center justify-center py-21 bg-transparent px-5 relative "
         >
-            {width <= 1024 ? <Education /> : <EducationDesktop />}
+            {isMobile ? <EducationMobile /> : <EducationDesktop />}
 
             <Skills />
             {/* <div className="w-full min-h-screen absolute top-0 left-0 bg-[#161616] -z-10 "></div> */}

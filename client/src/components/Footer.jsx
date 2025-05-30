@@ -1,6 +1,6 @@
 import React from "react";
 
-const Footer = ({ handleMouseHover, revertHover }) => {
+const Footer = () => {
     return (
         <footer
             id="footer"
@@ -17,8 +17,6 @@ const Footer = ({ handleMouseHover, revertHover }) => {
                     href="https://icons8.com/"
                     target="_blank"
                     className=" underline"
-                    onMouseOver={handleMouseHover}
-                    onMouseLeave={revertHover}
                 >
                     Icons8
                 </a>

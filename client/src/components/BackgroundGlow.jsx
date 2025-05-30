@@ -30,11 +30,11 @@ const BackgroundGlow = () => {
             ref={glowRef}
             className="pointer-events-none absolute top-0 left-0 rounded-full z-0"
             style={{
-                width: "300px",
-                height: "300px",
+                width: "250px",
+                height: "250px",
                 background:
                     "radial-gradient(circle at center, rgba(0, 255, 0, 0.25) 0%, rgba(0, 255, 0, 0.05) 60%, transparent 80%)",
-                filter: "blur(30px)",
+                filter: "blur(10px)",
                 transform: "translate(-50%, -50%)",
             }}
         />

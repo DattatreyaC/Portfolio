@@ -7,20 +7,19 @@ import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import gsap from "gsap";
 
+gsap.registerPlugin(ScrollTrigger);
+
 const EducationDesktop = () => {
     const moveRef = useRef(null);
     const eduRef = useRef(null);
-
-    const imageRefs = useRef([]);
-    const textBlockRefs = useRef([]);
+    const itemRefs = useRef([]);
 
     const educationData = [
         {
-            title: "The Calcutta Boys' School",
+            title: "Calcutta Boys' School",
             duration: "2007 - 2019",
             description: "10th",
             image: cbsLogo,
-            color: "black",
             score: "89.6%",
         },
         {
@@ -28,7 +27,6 @@ const EducationDesktop = () => {
             duration: "2019 - 2021",
             description: "12th",
             image: aassLogo,
-            color: "gray",
             score: "91%",
         },
         {
@@ -36,7 +34,6 @@ const EducationDesktop = () => {
             duration: "2021 - 2024",
             description: "BCA",
             image: iemLogo,
-            color: "blue",
             score: "9.53",
         },
         {
@@ -44,22 +41,16 @@ const EducationDesktop = () => {
             duration: "2024 - 2026",
             description: "MCA",
             image: juLogo,
-            color: "red",
             score: "",
         },
     ];
 
     useGSAP(() => {
-        gsap.registerPlugin(ScrollTrigger);
-
         if (moveRef.current) {
             gsap.set(moveRef.current, { left: "-200%", opacity: 0 });
             gsap.to(moveRef.current, {
+                left: "0%",
                 opacity: 1,
-                // left: "100%",
-                // ease: "none",
-                // repeat: -1,
-                // duration: 4,
                 scrollTrigger: {
                     trigger: moveRef.current,
                     start: "top 74%",
@@ -69,55 +60,32 @@ const EducationDesktop = () => {
             });
         }
 
-        educationData.forEach((_, i) => {
-            const imageEl = imageRefs.current[i];
-            const textBlockEl = textBlockRefs.current[i];
-            const isBelow = i % 2 === 0;
-
-            if (imageEl && textBlockEl) {
-                gsap.set(imageEl, { x: -100, opacity: 0 });
-                gsap.set(textBlockEl, { y: isBelow ? 50 : -50, opacity: 0 });
-
-                const tl = gsap.timeline({
-                    scrollTrigger: {
-                        trigger: imageEl,
-                        start: "top 74%",
-                        end: "top 50%",
-                        toggleActions: "play none none reverse",
-                    },
-                });
-
-                tl.to(imageEl, {
-                    x: 0,
-                    opacity: 1,
-                    duration: 0.8,
-                    ease: "power1.out",
-                });
-
-                tl.to(
-                    textBlockEl,
-                    {
-                        y: 0,
-                        opacity: 1,
-                        duration: 1,
-                        ease: "none",
-                    },
-                    "<0.2",
-                );
-            }
+        itemRefs.current.forEach((el) => {
+            if (!el) return;
+            gsap.set(el, { x: -100, opacity: 0 });
+            gsap.to(el, {
+                x: 0,
+                opacity: 1,
+                duration: 0.8,
+                scrollTrigger: {
+                    trigger: el,
+                    start: "top 80%",
+                    toggleActions: "play none none reverse",
+                },
+            });
         });
     }, []);
 
     return (
-        <div className="w-full h-auto lg:px-10 2xl:px-5 flex flex-col items-center justify-center py-10 overflow-x-hidden ">
-            <h1 className="font-major text-4xl text-center mb-5">EdUcAtIoN</h1>
+        <div className="w-full h-auto px-10 flex flex-col items-center justify-center py-10 overflow-x-visible">
+            <h1 className="font-major text-4xl text-center mb-10">EdUcAtIoN</h1>
 
             <div
                 id="detail-container"
                 ref={eduRef}
-                className="relative w-3/4 h-70 flex justify-between items-center lg:mx-20 xl:px-50 "
+                className="relative w-3/4 max-w-[1200px] mx-auto h-80 flex justify-between items-center"
             >
-                {/* timeline */}
+                {/* Timeline line */}
                 <div className="absolute left-0 right-0 top-1/2 h-0.5 bg-transparent rounded-full overflow-hidden">
                     <div
                         ref={moveRef}
@@ -125,11 +93,11 @@ const EducationDesktop = () => {
                     ></div>
                 </div>
 
-                {/* education details mapping */}
+                {/* Education markers */}
                 {educationData.map((e, i) => {
                     const isBelow = i % 2 === 0;
 
-                    const leftPosition =
+                    const leftPercent =
                         educationData.length > 1
                             ? `${(i / (educationData.length - 1)) * 100}%`
                             : "50%";
@@ -137,34 +105,33 @@ const EducationDesktop = () => {
                     return (
                         <div
                             key={i}
-                            className="absolute size-17 xl:size-18 z-10 group"
+                            ref={(el) => (itemRefs.current[i] = el)}
+                            className="absolute z-10 flex flex-col items-center group"
                             style={{
-                                left: leftPosition,
+                                left: leftPercent,
                                 top: "50%",
                                 transform: "translateX(-50%) translateY(-50%)",
                             }}
                         >
-                            <img
-                                src={e.image}
-                                alt={e.title}
-                                loading="lazy"
-                                ref={(el) => (imageRefs.current[i] = el)}
-                                className="w-full h-full rounded-full border-2 border-white bg-white shadow-md transition-shadow duration-300 group-hover:shadow-[0_0_50px_rgba(255,255,255,0.7)]"
-                            />
+                            <div className="size-17 xl:size-18 rounded-full overflow-hidden border-2 border-white bg-white shadow-md transition-shadow duration-300 group-hover:shadow-[0_0_30px_rgba(255,255,255,0.5)] flex items-center justify-center">
+                                <img
+                                    src={e.image}
+                                    alt={e.title}
+                                    className="w-14 h-14 xl:w-16 xl:h-16 object-contain"
+                                />
+                            </div>
 
+                            {/* Text */}
                             <div
-                                ref={(el) => (textBlockRefs.current[i] = el)}
                                 className={`absolute flex flex-col items-center text-center whitespace-nowrap z-0
-                                        ${
-                                            isBelow
-                                                ? "top-full mt-4"
-                                                : "bottom-full mb-4"
-                                        }
-                                        transition-all duration-300 ease-in-out
-                                        `}
+                                    ${
+                                        isBelow
+                                            ? "top-full mt-4"
+                                            : "bottom-full mb-4"
+                                    } transition-all duration-300 ease-in-out`}
                                 style={{
                                     left: "50%",
-                                    transform: `translateX(-50%)`,
+                                    transform: "translateX(-50%)",
                                 }}
                             >
                                 <h3 className="font-semibold text-lg text-white/50 group-hover:text-white transition-colors duration-300">

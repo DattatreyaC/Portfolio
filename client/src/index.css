@@ -24,21 +24,83 @@ body {
     color: #f3f4f6;
     scroll-behavior: smooth;
     overflow-x: hidden;
+    cursor: url("/icons8-mouse-cursor-24.png") 8 8, auto;
 }
-main {
-    cursor: none;
-}
+/* main {
+    cursor: url("/icons8-mouse-cursor-24.png"), auto;
+} */
 a {
-    cursor: none;
+    cursor: url("/icons8-hand-cursor-24.png") 8 8, auto;
 }
 button {
-    cursor: none;
+    cursor: url("/icons8-hand-cursor-24.png") 8 8, auto;
 }
 input {
-    cursor: none;
+    cursor: url("/icons8-mouse-cursor-24.png") 8 8, auto;
 }
 textarea {
-    cursor: none;
+    cursor: url("/icons8-mouse-cursor-24.png") 8 8, auto;
+}
+
+#Linkedin::before {
+    content: attr(id);
+    position: absolute;
+    bottom: -50%;
+    right: -15%;
+    background-color: rgba(255, 255, 255, 0.3);
+    font-family: var(--font-space-grotesk);
+    padding: 0 5px 0 5px;
+    border-radius: 0.3rem;
+    font-size: small;
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
+}
+#Linkedin:hover::before {
+    opacity: 1;
+}
+#X::before {
+    content: attr(id);
+    position: absolute;
+    bottom: -50%;
+    left: 35%;
+    background-color: rgba(255, 255, 255, 0.3);
+    font-family: var(--font-space-grotesk);
+    padding: 0 5px 0 5px;
+    border-radius: 0.3rem;
+    font-size: small;
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
+}
+#X:hover::before {
+    opacity: 1;
+}
+#Instagram::before {
+    content: attr(id);
+    position: absolute;
+    bottom: -50%;
+    right: -25%;
+    background-color: rgba(255, 255, 255, 0.3);
+    font-family: var(--font-space-grotesk);
+    padding: 0 5px 0 5px;
+    border-radius: 0.3rem;
+    font-size: small;
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
+}
+#Instagram:hover::before {
+    opacity: 1;
+}
+
+@keyframes rotate {
+    0% {
+        rotate: 0deg;
+    }
+    50% {
+        rotate: 180deg;
+    }
+    100% {
+        rotate: 360deg;
+    }
 }
 
 ::-webkit-scrollbar {

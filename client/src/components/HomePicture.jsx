@@ -91,11 +91,14 @@ const HomePicture = ({ isLoaded }) => {
                 <div className="absolute bg-gray-700 size-5 rounded-full top-40 -left-6 lg:top-70 lg:-left-4 xl:top-95 animate-pulse"></div>
 
                 {/* Main Profile Image */}
-                <img
-                    src={profilePicture}
-                    alt="profile"
-                    className="size-50 lg:size-100 xl:size-120 rounded-full bg-gradient-to-b from-gray-950/40 to-gray-950 border-10 border-double border-gray-300/50"
-                />
+                {/* bg-gradient-to-b from-gray-950/40 to-gray-950 */}
+                <div className="bg-black/70 size-max rounded-full">
+                    <img
+                        src={profilePicture}
+                        alt="profile"
+                        className="size-50 lg:size-100 xl:size-120 rounded-full bg-white/10 hover:bg-white/20 transition-colors duration-300 border-10 border-double border-gray-400/40"
+                    />
+                </div>
             </div>
         </div>
     );

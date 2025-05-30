@@ -4,10 +4,11 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import toast from "react-hot-toast";
 import axios from "axios";
+import SplitText from "gsap/SplitText";
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, SplitText);
 
-const Contact = ({ handleMouseHover, revertHover }) => {
+const Contact = () => {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
@@ -16,6 +17,32 @@ const Contact = ({ handleMouseHover, revertHover }) => {
 
     const socialRef = useRef(null);
     const linksRef = useRef(null);
+
+    const contactHeading = useRef(null);
+    const socialHeading = useRef(null);
+
+    const runSendingAnimation = () => {
+        sendSplit = new SplitText("#sending", { type: "chars" });
+        dotSplit = new SplitText("#dots", { type: "chars" });
+
+        const sendTimeline = gsap.timeline();
+
+        sendTimeline.from(sendSplit.chars, {
+            opacity: 0,
+            x: -5,
+            stagger: 0.1,
+        });
+        sendTimeline.from(
+            dotSplit.chars,
+            {
+                opacity: 0,
+                stagger: 0.3,
+                repeat: -1,
+                yoyo: true,
+            },
+            "<0.7",
+        );
+    };
 
     const validateForm = () => {
         if (!firstName || !lastName || !email || !message) {
@@ -29,6 +56,8 @@ const Contact = ({ handleMouseHover, revertHover }) => {
 
         if (validateForm() === true) {
             setIsSending(true);
+
+            runSendingAnimation();
 
             const payload = {
                 from_name: `${firstName} ${lastName}`,
@@ -57,46 +86,87 @@ const Contact = ({ handleMouseHover, revertHover }) => {
     };
 
     useGSAP(() => {
-        // const socialCollection =
-        //     socialRef.current.querySelectorAll("#social,#links");
+        let contactSplit, socialSplit, sendSplit, dotSplit;
 
-        // Animate inputs alternately left and right
-        const formElements = gsap.utils.toArray(
-            "#contact form input, #contact form textarea, #contact form button",
-        );
+        const runAnimations = () => {
+            contactSplit = new SplitText(contactHeading.current, {
+                type: "chars",
+            });
 
-        formElements.forEach((el, index) => {
-            gsap.from(el, {
+            gsap.from(contactSplit.chars, {
                 opacity: 0,
-                x: index % 2 === 0 ? -50 : 50, // alternate left and right
-                duration: 1,
+                x: 20,
+                stagger: 0.1,
                 scrollTrigger: {
-                    trigger: el,
-                    start: "top 90%",
-                    end: "top 70%",
+                    trigger: contactSplit.chars,
+                    start: "top 85%",
+                    end: "top 80%",
+                    toggleActions: "play none none reverse",
                 },
             });
-        });
 
-        gsap.from(socialRef.current, {
-            opacity: 0,
-            y: 50,
-            duration: 1,
-            ease: "power4.out",
-            scrollTrigger: {
-                trigger: socialRef.current,
-                start: "top 95%",
-                end: "top 85%",
-                toggleActions: "play none none reverse",
-            },
-        });
+            socialSplit = new SplitText(socialHeading.current, {
+                type: "chars",
+            });
 
-        // gsap.to(linksRef.current, {
-        //     duration: 5,
-        //     ease: "none",
-        //     repeat: -1,
-        // });
-    });
+            gsap.from(socialSplit.chars, {
+                opacity: 0,
+                y: 20,
+                stagger: 0.07,
+                scrollTrigger: {
+                    trigger: socialSplit.chars,
+                    start: "top 90%",
+                    end: "top 80%",
+                    toggleActions: "play none none reverse",
+                },
+            });
+
+            const formElements = gsap.utils.toArray(
+                "#contact form input, #contact form textarea, #contact form button",
+            );
+
+            formElements.forEach((el, index) => {
+                gsap.from(el, {
+                    opacity: 0,
+                    x: index % 2 === 0 ? -50 : 50,
+                    duration: 1,
+                    scrollTrigger: {
+                        trigger: el,
+                        start: "top 90%",
+                        end: "top 70%",
+                        toggleActions: "play none none reverse",
+                    },
+                });
+            });
+
+            gsap.from(socialRef.current, {
+                opacity: 0,
+                y: 50,
+                duration: 1,
+                ease: "power4.out",
+                scrollTrigger: {
+                    trigger: socialRef.current,
+                    start: "top 95%",
+                    end: "top 85%",
+                    toggleActions: "play none none reverse",
+                },
+            });
+        };
+
+        // Wait for fonts to load
+        if (document.fonts?.ready) {
+            document.fonts.ready.then(runAnimations);
+        } else {
+            runAnimations();
+        }
+
+        return () => {
+            contactSplit?.revert?.();
+            socialSplit?.revert?.();
+            sendSplit?.revert?.();
+            dotSplit?.revert?.();
+        };
+    }, []);
 
     return (
         <section
@@ -104,7 +174,11 @@ const Contact = ({ handleMouseHover, revertHover }) => {
             className="min-h-screen relative w-full flex flex-col items-center justify-around gap-5 py-10 lg:flex-row lg:justify-center lg:gap-20"
         >
             <div className=" w-full px-5 sm:px-15 md:w-[90%] md:px-25 lg:px-15 lg:w-1/2 xl:w-[40rem] xl:px-10 ">
-                <h1 className="text-3xl font-major mt-5 pb-10 text-center lg:font-medium lg:text-4xl lg:text-left ">
+                <h1
+                    ref={contactHeading}
+                    id="contact-heading"
+                    className="text-3xl font-major mt-5 pb-10 text-center lg:font-medium lg:text-4xl lg:text-left "
+                >
                     ContAct Me
                 </h1>
 
@@ -158,19 +232,20 @@ const Contact = ({ handleMouseHover, revertHover }) => {
                         className={`group relative bg-transparent cursor-pointer  lg:mt-5 p-3 text-md font-semibold [letter-spacing:1px] rounded overflow-hidden ${
                             isSending && " cursor-not-allowed"
                         }`}
-                        onMouseOver={handleMouseHover}
-                        onMouseLeave={revertHover}
                     >
                         <div className="absolute top-0 left-[-100%] h-full w-[200%] bg-gradient-to-r  from-main-accent/80 via-emerald-400 to-main-accent/80 transition-all duration-300 group-hover:left-0 z-0"></div>
 
                         {isSending ? (
                             <div className="flex justify-center text-md [text-shadow:1px_1px_10px_black]">
-                                <p className="text-white relative text-md z-10 [text-shadow:1px_1px_3px_black]">
-                                    Sending
+                                <p
+                                    id="sending"
+                                    className="text-white relative text-md z-10 [text-shadow:1px_1px_3px_black]"
+                                >
+                                    Sending <span id="dots">...</span>
                                 </p>
-                                <div className="animate-spin">
+                                {/* <div className="animate-spin">
                                     <i class="ri-loader-line"></i>
-                                </div>
+                                </div> */}
                             </div>
                         ) : (
                             <p className="text-white relative text-md z-10 [text-shadow:1px_1px_3px_black]">
@@ -185,7 +260,11 @@ const Contact = ({ handleMouseHover, revertHover }) => {
                 ref={socialRef}
                 className="flex flex-col gap-3 items-center justify-center font-major mb-15 lg:mb-0"
             >
-                <h1 id="social" className="text-2xl  lg:text-3xl">
+                <h1
+                    ref={socialHeading}
+                    id="social"
+                    className="text-2xl  lg:text-3xl"
+                >
                     SociALs
                 </h1>
                 <div
@@ -195,10 +274,10 @@ const Contact = ({ handleMouseHover, revertHover }) => {
                 >
                     <div className="bg-white/60 lg:bg-white/40 lg:hover:bg-white transition-colors duration-300 rounded-full lg:rounded-md p-1 relative">
                         <a
+                            id="Linkedin"
+                            className="social-link"
                             target="_blank"
                             href="https://www.linkedin.com/in/dattatreya-chakraborty/"
-                            onMouseOver={handleMouseHover}
-                            onMouseLeave={revertHover}
                         >
                             <img
                                 src="/icons8-linkedin-48.png"
@@ -210,10 +289,10 @@ const Contact = ({ handleMouseHover, revertHover }) => {
 
                     <div className="bg-white/60 lg:bg-white/40 lg:hover:bg-white transition-colors duration-300 rounded-full lg:rounded-md p-1 relative">
                         <a
+                            id="X"
+                            className="social-link"
                             href="https://x.com/DattatreyaChak8"
                             target="_blank"
-                            onMouseOver={handleMouseHover}
-                            onMouseLeave={revertHover}
                         >
                             <img
                                 className="size-8 md:size-10"
@@ -225,10 +304,10 @@ const Contact = ({ handleMouseHover, revertHover }) => {
 
                     <div className="bg-white/60 lg:bg-white/40 lg:hover:bg-white transition-colors duration-300 rounded-full lg:rounded-md p-1 relative">
                         <a
+                            id="Instagram"
+                            className="social-link"
                             href="https://www.instagram.com/dattatreyac__/"
                             target="_blank"
-                            onMouseOver={handleMouseHover}
-                            onMouseLeave={revertHover}
                         >
                             <img
                                 className="size-8 md:size-10"

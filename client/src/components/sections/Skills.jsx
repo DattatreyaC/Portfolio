@@ -9,17 +9,16 @@ gsap.registerPlugin(ScrollTrigger);
 const Skills = () => {
     const skillsRef = useRef(null);
 
-    // This will refresh ScrollTrigger when the component is mounted or updated
-    // useEffect(() => {
-    //     ScrollTrigger.refresh();
-    // }, []);
-
     useGSAP(() => {
+        if (!skillsRef.current) return;
+
         const skillSections = skillsRef.current.querySelectorAll(
-            "#code, #frontend, #backend",
+            "#code, #frontend, #backend, #db",
         );
 
-        gsap.fromTo(
+        gsap.set(skillSections, { opacity: 0, x: 200 });
+
+        const animation = gsap.fromTo(
             skillSections,
             { opacity: 0, x: 200 },
             {
@@ -33,16 +32,31 @@ const Skills = () => {
                     start: "top 74%",
                     end: "top 50%",
                     toggleActions: "play none none reverse",
-                    // markers: true,
                 },
             },
         );
-    });
+
+        return () => {
+            animation.scrollTrigger?.kill();
+            animation.kill();
+        };
+    }, []);
+
+    useEffect(() => {
+        const handleResize = () => ScrollTrigger.refresh();
+        window.addEventListener("resize", handleResize);
+        ScrollTrigger.refresh();
+
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
+
     return (
         <div
             ref={skillsRef}
             id="skills"
-            className="h-full w-full flex flex-col gap-1 md:gap-3 items-center justify-center bg-transparent "
+            className="h-full w-full flex flex-col gap-1 md:gap-0 items-center justify-center bg-transparent "
         >
             <h1
                 id="heading"
@@ -53,7 +67,7 @@ const Skills = () => {
 
             <div
                 id="code"
-                className="rounded-lg flex gap-3 xl:gap-2 2xl:gap-3 w-max p-3"
+                className="rounded-lg flex gap-3 xl:gap-2 2xl:gap-3 w-max p-2"
             >
                 <SkillCard image="/icons8-java-48.png" title="Java" />
                 <SkillCard
@@ -66,7 +80,7 @@ const Skills = () => {
 
             <div
                 id="frontend"
-                className="rounded-lg flex gap-3 xl:gap-2 2xl:gap-3 w-max p-3"
+                className="rounded-lg flex gap-3 xl:gap-2 2xl:gap-3 w-max p-2"
             >
                 <SkillCard image="/icons8-html-48.png" title="HTML" />
                 <SkillCard image="/icons8-css-48.png" title="CSS" />
@@ -79,7 +93,7 @@ const Skills = () => {
 
             <div
                 id="backend"
-                className="flex gap-3 xl:gap-2 2xl:gap-3 rounded-md w-max p-3"
+                className="flex gap-3 xl:gap-2 2xl:gap-3 rounded-md w-max p-2"
             >
                 <SkillCard image="/icons8-nodejs-48.png" title="Node" />
                 <SkillCard image="/icons8-express-js-50.png" title="Express" />
@@ -89,7 +103,15 @@ const Skills = () => {
                     title="PostgreSQL"
                 />
             </div>
-            <div id="db" className="border rounded-lg "></div>
+            <div
+                id="db"
+                className="flex gap-3 xl:gap-2 2xl:gap-3 rounded-md w-max p-2"
+            >
+                <SkillCard
+                    image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/16327/logo.gif"
+                    title="GSAP"
+                />
+            </div>
         </div>
     );
 };

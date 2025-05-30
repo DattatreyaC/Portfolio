@@ -1,22 +1,30 @@
 import { useGSAP } from "@gsap/react";
 import React, { useEffect, useRef } from "react";
 import gsap from "gsap";
+import { SplitText } from "gsap/SplitText";
 
-const Navbar = ({
-    menuOpen,
-    setMenuOpen,
-    isLoaded,
-    handleMouseHover,
-    revertHover,
-}) => {
+gsap.registerPlugin(SplitText);
+
+const Navbar = ({ menuOpen, setMenuOpen, isLoaded }) => {
     const linksRef = useRef(null);
+    const logoRef = useRef(null);
 
     useEffect(() => {
         document.body.style.overflow = menuOpen ? "hidden" : "";
     }, [menuOpen]);
 
     useGSAP(() => {
+        let split;
+
+        split = new SplitText(logoRef.current, { type: "chars" });
+
         const navTimeline = gsap.timeline();
+
+        gsap.from(split.chars, {
+            opacity: 0,
+            x: 30,
+            stagger: 0.1,
+        });
 
         gsap.from(linksRef.current, {
             opacity: 0,
@@ -24,12 +32,14 @@ const Navbar = ({
             x: -50,
             ease: "elastic.out",
         });
+
         navTimeline.from("#logo", {
             opacity: 0,
             y: -20,
             delay: 0.2,
             duration: 0.6,
         });
+
         navTimeline.from(
             "#links a",
             {
@@ -49,15 +59,16 @@ const Navbar = ({
                     id="logo"
                     href="#home"
                     className="font-major text-3xl sm:text-4xl flex items-center gap-1 lg:p-1.5 lg:rounded lg:transition-colors lg:duration-300 lg:border lg:border-transparent lg:hover:border-white/30 lg:hover:bg-white/10 "
-                    onMouseOver={handleMouseHover}
-                    onMouseLeave={revertHover}
                 >
                     <div className="bg-white flex items-center justify-center text-black font-bold p-0.5">
                         <span className="text-main-accent">D</span>C
                     </div>
-                    <div className="text-[1rem] sm:text-[1.3rem] text-white">
-                        <p>dattatreya</p>
-                        <p>chakraborty</p>
+                    <div
+                        ref={logoRef}
+                        className="text-[1rem] sm:text-[1.3rem] text-white"
+                    >
+                        <p className="logo-name">dattatreya</p>
+                        <p className="logo-name">chakraborty</p>
                     </div>
                 </a>
 
@@ -81,8 +92,6 @@ const Navbar = ({
                     <a
                         href="#home"
                         className="text-gray-200 hover:text-[#70ff70]  transition-colors ease-in-out py-2 px-2"
-                        onMouseOver={handleMouseHover}
-                        onMouseLeave={revertHover}
                     >
                         Home
                     </a>
@@ -90,8 +99,6 @@ const Navbar = ({
                     <a
                         href="#about"
                         className="text-gray-200 hover:text-[#70ff70]  transition-colors ease-in-out py-2 px-2"
-                        onMouseOver={handleMouseHover}
-                        onMouseLeave={revertHover}
                     >
                         About
                     </a>
@@ -99,8 +106,6 @@ const Navbar = ({
                     <a
                         href="#projects"
                         className="text-gray-200 hover:text-[#70ff70]  transition-colors ease-in-out py-2 px-2"
-                        onMouseOver={handleMouseHover}
-                        onMouseLeave={revertHover}
                     >
                         Projects
                     </a>
@@ -108,8 +113,6 @@ const Navbar = ({
                     <a
                         href="#contact"
                         className="text-gray-200 hover:text-[#70ff70]  transition-colors ease-in-out py-2 px-2"
-                        onMouseOver={handleMouseHover}
-                        onMouseLeave={revertHover}
                     >
                         Contact
                     </a>

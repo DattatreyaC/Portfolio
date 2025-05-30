@@ -1,6 +1,20 @@
 import React from "react";
 
 const Projects = () => {
+    const projects = [
+        {
+            title: "ChatSync",
+            image: "",
+            description: "",
+            skills: {
+                frontend: ["React.js", "TailwindCSS"],
+                backend: ["Node.js", "Express.js", "MongoDB", "Socket.io"],
+            },
+            github: "#",
+            link: "#",
+        },
+    ];
+
     return (
         <section
             id="projects"
