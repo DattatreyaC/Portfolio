@@ -111,6 +111,8 @@ const Skills = () => {
                     image="https://s3-us-west-2.amazonaws.com/s.cdpn.io/16327/logo.gif"
                     title="GSAP"
                 />
+                <SkillCard image="/icons8-figma-48.png" title="Figma" />
+                <SkillCard image="/icons8-blender-48.png" title="Blender" />
             </div>
         </div>
     );
