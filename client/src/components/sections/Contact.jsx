@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
@@ -17,32 +17,9 @@ const Contact = () => {
 
     const socialRef = useRef(null);
     const linksRef = useRef(null);
-
     const contactHeading = useRef(null);
     const socialHeading = useRef(null);
-
-    const runSendingAnimation = () => {
-        sendSplit = new SplitText("#sending", { type: "chars" });
-        dotSplit = new SplitText("#dots", { type: "chars" });
-
-        const sendTimeline = gsap.timeline();
-
-        sendTimeline.from(sendSplit.chars, {
-            opacity: 0,
-            x: -5,
-            stagger: 0.1,
-        });
-        sendTimeline.from(
-            dotSplit.chars,
-            {
-                opacity: 0,
-                stagger: 0.3,
-                repeat: -1,
-                yoyo: true,
-            },
-            "<0.7",
-        );
-    };
+    const sendingRef = useRef(null);
 
     const validateForm = () => {
         if (!firstName || !lastName || !email || !message) {
@@ -56,8 +33,6 @@ const Contact = () => {
 
         if (validateForm() === true) {
             setIsSending(true);
-
-            runSendingAnimation();
 
             const payload = {
                 from_name: `${firstName} ${lastName}`,
@@ -86,13 +61,12 @@ const Contact = () => {
     };
 
     useGSAP(() => {
-        let contactSplit, socialSplit, sendSplit, dotSplit;
+        let contactSplit, socialSplit;
 
         const runAnimations = () => {
             contactSplit = new SplitText(contactHeading.current, {
                 type: "chars",
             });
-
             gsap.from(contactSplit.chars, {
                 opacity: 0,
                 x: 20,
@@ -108,7 +82,6 @@ const Contact = () => {
             socialSplit = new SplitText(socialHeading.current, {
                 type: "chars",
             });
-
             gsap.from(socialSplit.chars, {
                 opacity: 0,
                 y: 20,
@@ -124,7 +97,6 @@ const Contact = () => {
             const formElements = gsap.utils.toArray(
                 "#contact form input, #contact form textarea, #contact form button",
             );
-
             formElements.forEach((el, index) => {
                 gsap.from(el, {
                     opacity: 0,
@@ -153,7 +125,6 @@ const Contact = () => {
             });
         };
 
-        // Wait for fonts to load
         if (document.fonts?.ready) {
             document.fonts.ready.then(runAnimations);
         } else {
@@ -163,10 +134,41 @@ const Contact = () => {
         return () => {
             contactSplit?.revert?.();
             socialSplit?.revert?.();
-            sendSplit?.revert?.();
-            dotSplit?.revert?.();
         };
     }, []);
+
+    useEffect(() => {
+        let sendSplit, dotSplit;
+
+        if (isSending && sendingRef.current) {
+            sendSplit = new SplitText(sendingRef.current, { type: "chars" });
+            dotSplit = new SplitText("#dots", { type: "chars" });
+
+            const sendTimeline = gsap.timeline();
+
+            sendTimeline.from(sendSplit.chars, {
+                opacity: 0,
+                x: -5,
+                stagger: 0.1,
+            });
+
+            sendTimeline.from(
+                dotSplit.chars,
+                {
+                    opacity: 0,
+                    stagger: 0.3,
+                    repeat: -1,
+                    yoyo: true,
+                },
+                "<0.7",
+            );
+
+            return () => {
+                sendSplit?.revert?.();
+                dotSplit?.revert?.();
+            };
+        }
+    }, [isSending]);
 
     return (
         <section
@@ -238,6 +240,7 @@ const Contact = () => {
                         {isSending ? (
                             <div className="flex justify-center text-md [text-shadow:1px_1px_10px_black]">
                                 <p
+                                    ref={sendingRef}
                                     id="sending"
                                     className="text-white relative text-md z-10 [text-shadow:1px_1px_3px_black]"
                                 >
