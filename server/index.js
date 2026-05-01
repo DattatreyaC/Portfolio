@@ -11,16 +11,15 @@ const port = process.env.PORT || 3000;
 app.use(
     cors({
         origin: "https://portfolio-dattatreyac.vercel.app",
-    }),
+    })
 );
 app.use(json());
 
-// Create transporter using your .env credentials
 const transporter = createTransport({
     service: "gmail",
     auth: {
-        user: process.env.EMAIL_USER, // Your Gmail address
-        pass: process.env.EMAIL_PASS, // Your Gmail app password (no spaces)
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
     },
 });
 
@@ -41,10 +40,10 @@ app.post("/send-email", (req, res) => {
     }
 
     const mailOptions = {
-        from: process.env.EMAIL_USER, // Must be your verified Gmail
-        to: process.env.EMAIL_RECEIVER, // Receiver (your email)
+        from: process.env.EMAIL_USER,
+        to: process.env.EMAIL_RECEIVER,
         subject: `New message from ${from_name}`,
-        replyTo: from_email, // So you can reply to sender
+        replyTo: from_email,
         text: message,
         html: `<p><strong>From:</strong> ${from_name} (${from_email})</p>
                 <p><strong>Message:</strong></p>

@@ -14,6 +14,8 @@ import BackgroundGlow from "./components/BackgroundGlow";
 import { Toaster } from "react-hot-toast";
 import { ScrollSmoother } from "gsap/ScrollSmoother";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Skills from "./components/sections/Skills";
+import Experience from "./components/sections/Experience";
 
 gsap.registerPlugin(ScrollSmoother, ScrollTrigger);
 
@@ -67,9 +69,11 @@ const App = () => {
                         {width >= 768 && <BackgroundGlow />}
                         <Home isLoaded={isLoaded} />
                         <About />
+                        <Experience />
+                        <Skills />
                         <Projects />
                         <Contact />
-                        <Footer />
+
                         {/* <Firefly count={3} /> */}
                     </>
                 ) : (

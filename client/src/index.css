@@ -29,6 +29,9 @@ body {
 /* main {
     cursor: url("/icons8-mouse-cursor-24.png"), auto;
 } */
+.heading{
+    
+}
 a {
     cursor: url("/icons8-hand-cursor-24.png") 8 8, auto;
 }
@@ -42,6 +45,22 @@ textarea {
     cursor: url("/icons8-mouse-cursor-24.png") 8 8, auto;
 }
 
+#Mail::before {
+    content: attr(id);
+    position: absolute;
+    bottom: -50%;
+    right: 15%;
+    background-color: rgba(255, 255, 255, 0.3);
+    font-family: var(--font-space-grotesk);
+    padding: 0 5px 0 5px;
+    border-radius: 0.3rem;
+    font-size: small;
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
+}
+#Mail:hover::before {
+    opacity: 1;
+}
 #Linkedin::before {
     content: attr(id);
     position: absolute;

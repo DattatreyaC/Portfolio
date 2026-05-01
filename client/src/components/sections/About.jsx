@@ -2,6 +2,7 @@ import Skills from "./Skills";
 import { useEffect, useState } from "react";
 import EducationDesktop from "./EducationDesktop";
 import EducationMobile from "./EducationMobile";
+import Experience from "./Experience";
 
 function useMediaQuery(query) {
     const [matches, setMatches] = useState(false);
@@ -28,7 +29,9 @@ const About = ({ handleMouseHover, revertHover }) => {
         >
             {isMobile ? <EducationMobile /> : <EducationDesktop />}
 
-            <Skills />
+            {/* <Experience /> */}
+
+            {/* <Skills /> */}
             {/* <div className="w-full min-h-screen absolute top-0 left-0 bg-[#161616] -z-10 "></div> */}
         </section>
     );

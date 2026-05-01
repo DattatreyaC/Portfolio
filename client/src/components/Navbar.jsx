@@ -87,7 +87,7 @@ const Navbar = ({ menuOpen, setMenuOpen, isLoaded }) => {
                 <div
                     ref={linksRef}
                     id="links"
-                    className="hidden md:flex items-center gap-8 border border-white/30 p-3 rounded-xl bg-white/10 hover:bg-white/20 duration-300 transition-colors"
+                    className="hidden md:flex items-center gap-8 p-3 rounded-xl "
                 >
                     <a
                         href="#home"
@@ -101,6 +101,13 @@ const Navbar = ({ menuOpen, setMenuOpen, isLoaded }) => {
                         className="text-gray-200 hover:text-[#70ff70]  transition-colors ease-in-out py-2 px-2"
                     >
                         About
+                    </a>
+
+                    <a
+                        href="#skills   "
+                        className="text-gray-200 hover:text-[#70ff70]  transition-colors ease-in-out py-2 px-2"
+                    >
+                        Skills
                     </a>
 
                     <a
