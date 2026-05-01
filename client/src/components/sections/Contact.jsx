@@ -10,7 +10,6 @@ import Footer from "../Footer";
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
 const ContactLinkCard = ({ title, url, image }) => {
-    console.log(image);
     return (
         <div className="bg-white/60 lg:bg-white/40 lg:hover:bg-white transition-colors duration-300 rounded-full lg:rounded-md p-1 relative">
             <a id={title} className="social-link" target="_blank" href={url}>

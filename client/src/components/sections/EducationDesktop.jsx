@@ -77,7 +77,7 @@ const EducationDesktop = () => {
     }, []);
 
     return (
-        <div className="w-full h-auto px-10 flex flex-col items-center justify-center py-10 overflow-x-visible border">
+        <div className="w-full h-auto px-10 flex flex-col items-center justify-center py-10 overflow-x-visible">
             <h1 className="font-major text-4xl text-center mb-10">EdUcAtIoN</h1>
 
             <div
